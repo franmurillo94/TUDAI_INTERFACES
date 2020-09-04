@@ -1,15 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/css/all.min.css">
     <title>Pinturilli</title>
 </head>
+
 <body>
     <header>
-        <h1>Pinturilli</h1>
+        <h1>(Pinturilli)</h1>
     </header>
+    <main>
+        <div class="paint_tools">
+            <div class="paint_item">
+                <i class="fas fa-paint-brush"></i>
+            </div>
+            <div class="paint_item">
+                <i class="fas fa-palette"></i>
+            </div>
+            <div class="paint_item">
+                <i class="fas fa-eraser"></i>
+            </div>
+        </div>
+        <div class="main">
+            <canvas class="canvas" id="canvas">
+
+            </canvas>
+        </div>
+        <div class="filer">
+            <ul>
+                <li>Blur</li>
+            </ul>
+        </div>
+    </main>
+    <div class="main_tools">
+        <button>
+            <i class="fas fa-download"></i>
+        </button>
+        <button>
+            <i class="fas fa-images"></i>
+        </button>
+    </div>
     <script src="js/main.js"></script>
 </body>
+
 </html>

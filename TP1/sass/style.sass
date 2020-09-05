@@ -1,39 +1,104 @@
 @import variables
     
 * 
-    border: 1px solid red 
+    //border: 1px solid red 
 body 
     margin: 0
     background-color: $fondo
 header 
     text-align: center
+    background-color: $gris_dark
+    margin: 2vh 0 2vh 0
     h1 
         font-family: blue_eyes, sans-serif
         font-size: 80px
         font-weight: normal
         color: $primario
-i 
-    font-size: 80px
-    margin: 10px
-    color: white
+        padding: 4vh 0 4vh 0
+        margin: 0
 main 
     display: flex 
+    flex-direction: column
     justify-content: space-between
     .paint_tools
+        background-color: $gris_dark
         display: flex 
-        flex-direction: column
+        flex-direction: row
         justify-content: space-around
-        .paint_item
-            border: 1px solid black
-        i 
-            font-size: 40px
+        border: 1px solid black
+        padding: 2vh
+        div
+            //border: 1px solid black
+            display: flex
+            i 
+                font-size: 40px
+                margin-left: 0
+            label
+                //border: solid 2px blue 
+                height: 80px
+                width: 100px
+                border-radius: 15px
+                color: grey
+                display: flex
+                align-items: center
+                justify-content: center
+                box-shadow: 0 0 2px black
+                .fas
+                    font-size: 50px
+                    //border: 1px solid blue
+            input
+                appearance: none
+                -webkit-appearance: none
+                visibility: hidden
+                margin: 0
+            & :checked ~ label
+                background-color: $checked
+                color: white
+                box-shadow: 0 0 4px white
+            & :hover ~ label
+                background-color: $secundario
     .main 
         padding: 40px
+        display: flex
+        justify-content: center
         .canvas
             background-color: white
     .filter
+        background-color: $gris_dark
+        display: flex 
+        flex-direction: row
+        justify-content: space-around
+        border: 1px solid black
+        padding: 2vh
 .main_tools 
+    margin-top: 2vh
+    background-color: $gris_dark
     display: flex
     justify-content: center
-    i 
-        color: $primario
+    button
+        border: none
+        color: white
+        padding: 15px 32px
+        text-align: center
+        text-decoration: none
+        font-size: 16px
+        background-color: $gris_dark
+        border-radius: 20px
+        margin: 2vh
+        i 
+            color: grey
+            font-size: 80px
+            margin: 10px
+        & :hover 
+            box-shadow: none
+    & :hover
+        background-color: $primario
+        box-shadow: 0 0 10px white
+    & :active
+         background-color: $checked
+    & :active > i
+         color: white
+    & :focus 
+        outline: none
+
+@import queries

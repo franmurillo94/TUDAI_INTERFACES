@@ -2,6 +2,8 @@
     
 * 
     //border: 1px solid red 
+    margin: 0
+    padding: 0
 body 
     margin: 0
     background-color: $fondo
@@ -66,10 +68,44 @@ main
     .filter
         background-color: $gris_dark
         display: flex 
-        flex-direction: row
+        flex-direction: column
         justify-content: space-around
         border: 1px solid black
         padding: 2vh
+        position: relative
+        .filter-btn
+            border: 1px solid black
+            display: flex
+            justify-content: center
+            cursor: pointer
+            h3 
+                padding: 5px
+        .filter-toggle
+            padding: 10px
+            display: flex
+            flex-direction: row
+            justify-content: space-around
+            .filter-button
+                text-align: center
+                button
+                    border: none
+                    color: white
+                    padding: 5px 5px
+                    text-align: center
+                    text-decoration: none
+                    font-size: 12px
+                    background-color: $gris_dark
+                    border-radius: 20px
+                    margin: 2px
+                & :hover
+                    background-color: $secundario
+                    box-shadow: 0 0 10px white
+                & :active
+                    background-color: $checked
+                & :focus 
+                    outline: none         
+        & .active
+            display: none !important
 .main_tools 
     margin-top: 2vh
     background-color: $gris_dark
@@ -95,9 +131,9 @@ main
         background-color: $primario
         box-shadow: 0 0 10px white
     & :active
-         background-color: $checked
+        background-color: $checked
     & :active > i
-         color: white
+        color: white
     & :focus 
         outline: none
 

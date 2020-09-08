@@ -1,10 +1,20 @@
 @media (min-width: 700px)
     main 
         flex-direction: row
+        position: relative
+        height: 50vh
         .paint_tools
+            position: absolute
             flex-direction: column
+            bottom: 0
+            left: 0
+            top: 0
         .filter
+            position: absolute
             flex-direction: row
+            top: 0
+            right: 0
+            bottom: 0
             .filter-btn
                 align-items: center
             .filter-toggle

@@ -43,7 +43,7 @@
             <div class="filter-btn">
                 <h3>Filtros</h3>
             </div>
-            <div id="filter-toggle" class="filter-toggle">
+            <div id="filter-toggle" class="filter-toggle active">
                 <div class="filter-button"><button id="negativo">Negativo</button></div>
                 <div class="filter-button"><button id="sepia">Sepia</button></div>
                 <div class="filter-button"><button id="binarizacion">Binarizacion</button></div>
@@ -56,13 +56,15 @@
         </div>
     </main>
     <div class="main_tools">
-        <button>
-            <i class="fas fa-download"></i>
-        </button>
+        <a download="image.png" id="download">
+            <button id="download_btn">
+                <i class="fas fa-download"></i>
+            </button>
+        </a>
         <button onclick="document.querySelector('.file').click();">
             <i class="fas fa-images"></i>
         </button>
-        <input type="file" class="file" style="display:none;">
+        <input type="file" class="file">
     </div>
     <script src="js/main.js"></script>
 </body>

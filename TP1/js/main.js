@@ -53,7 +53,7 @@ input.onchange = e => {
             let imageData = ctx.getImageData(0, 0, imageScaledWidth, imageScaledHeight);
 
             // modify imageData
-            for (let j = 0; j < imageData.height; j++) {
+   /*          for (let j = 0; j < imageData.height; j++) {
                 for (let i = 0; i < imageData.width; i++) {
                     if (i % 2 == 0) {
                         let index = (i + imageData.width * j) * 4;
@@ -62,11 +62,18 @@ input.onchange = e => {
                         imageData.data[index + 2] = 0;
                     }
                 }
-            }
+            } */
             
             // draw the modified image
             ctx.putImageData(imageData, 0, 0);
         }
     }
 }
+let btn_download = document.getElementById('download_btn').addEventListener('click',download);
 
+function download(){
+    let download = document.getElementById("download");
+    let image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    download.setAttribute("href", image);
+
+}

@@ -120,18 +120,20 @@ main
             color: grey
             font-size: 80px
             margin: 10px
-        & :hover 
-            box-shadow: none
-    & :hover
-        background-color: $primario
-        box-shadow: 0 0 10px white
-    & :active
-        background-color: $checked
-    & :active > i
-        color: white
-    & :focus 
-        outline: none
- /**    .file 
-        display: none **/
-
+            &:hover 
+                box-shadow: none
+            &:focus
+                outline: none
+        &:hover
+            background-color: $primario
+            box-shadow: 0 0 10px white
+        &:active
+            background-color: $checked
+        &:active > i
+            color: white
+        &:focus 
+            outline: none
+    .file 
+        display: none
 @import queries
+ 

@@ -35,9 +35,9 @@
             </div>
         </div>
         <div class="main">
-            <canvas class="canvas" id="canvas">
-
-            </canvas>
+            <div class="canvas-container">
+                <canvas class="canvas" id="canvas"></canvas>
+            </div>
         </div>
         <div class="filter" id="filter">
             <div class="filter-btn">
@@ -57,12 +57,16 @@
     </main>
     <div class="main_tools">
         <a download="image.png" id="download">
-            <button id="download_btn">
+            <button id="download_btn" title="Descargar Imagen">
                 <i class="fas fa-download"></i>
             </button>
         </a>
-        <button onclick="document.querySelector('.file').click();">
+        <button onclick="document.querySelector('.file').click();" title="Cargar Imagen">
             <i class="fas fa-images"></i>
+        </button>
+        <input type="file" class="file">
+        <button id="clean-canvas" title="Restaurar Canvas">
+            <i class="fas fa-undo"></i>
         </button>
         <input type="file" class="file">
     </div>

@@ -1,25 +1,30 @@
 "use strict"
 
-// funcion valores radio button
-function getRadioValue(name){
-    for (var i = 0; i < document.getElementsByName(name).length; i++){
-        if (document.getElementsByName(name)[i].checked){
-            return document.getElementsByName(name)[i].value;
-        }
-    }
-}
-// obtiene valores de los radio paint-tool
-let paint_tool = getRadioValue('paint-tool');
 // muestra y oculta barra de herramientas 'filtros'
 let filter_tools = document.querySelector('.filter-btn').addEventListener('click',function() {
     document.getElementById('filter-toggle').classList.toggle('active')
 });
+
 // canvas y contexto
-let canvas = document.querySelector('.canvas');
+let canvas = document.querySelector('#canvas');
 let ctx = canvas.getContext('2d');
+
+clean_canvas();
 // canvas color blanco
-ctx.fillStyle = 'rgba(255,255,255,1)';
-ctx.fillRect(0, 0, canvas.width, canvas.height);
+let btn_clean = document.getElementById('clean-canvas').addEventListener('click', clean_canvas)
+function clean_canvas(){
+    canvas.width = 500;
+    canvas.height = 300;
+    let imageData = ctx.createImageData(canvas.width,canvas.height);
+    for (let i = 0; i < imageData.data.length; i += 4) {
+        imageData.data[i + 0] = 255; 
+        imageData.data[i + 1] = 255;    
+        imageData.data[i + 2] = 255;  
+        imageData.data[i + 3] = 255;
+    }
+    ctx.putImageData(imageData, 0, 0);
+}
+
 
 let input = document.querySelector('.file');
 
@@ -51,12 +56,12 @@ input.onchange = e => {
             canvas.height = this.height;
             // draw image on canvas
             ctx.drawImage(this, 0, 0, this.width, this.height);
-
+            
             // get imageData from content of canvas
             let imageData = ctx.getImageData(0, 0, this.width, this.height);
-
+            
             // modify imageData
-   /*          for (let j = 0; j < imageData.height; j++) {
+            /*          for (let j = 0; j < imageData.height; j++) {
                 for (let i = 0; i < imageData.width; i++) {
                     if (i % 2 == 0) {
                         let index = (i + imageData.width * j) * 4;
@@ -78,5 +83,9 @@ function download(){
     let download = document.getElementById("download");
     let image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
     download.setAttribute("href", image);
-
+    
 }
+        let prueba = document.getElementById('prueba').addEventListener('click',function(){
+            canvas_blanco();
+            console.log("hola");
+        });

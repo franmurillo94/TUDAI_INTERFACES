@@ -42,15 +42,18 @@ input.onchange = e => {
         image.src = content;
 
         image.onload = function () {
-            let imageAspectRatio = (1.0 * this.height) / this.width;
+          /*   let imageAspectRatio = (1.0 * this.height) / this.width;
             let imageScaledWidth = canvas.width;
-            let imageScaledHeight = canvas.width * imageAspectRatio;
-
+            let imageScaledHeight = canvas.width * imageAspectRatio; */
+            console.log(this.height);
+            console.log(this.width);
+            canvas.width = this.width;
+            canvas.height = this.height;
             // draw image on canvas
-            ctx.drawImage(this, 0, 0, imageScaledWidth, imageScaledHeight);
+            ctx.drawImage(this, 0, 0, this.width, this.height);
 
             // get imageData from content of canvas
-            let imageData = ctx.getImageData(0, 0, imageScaledWidth, imageScaledHeight);
+            let imageData = ctx.getImageData(0, 0, this.width, this.height);
 
             // modify imageData
    /*          for (let j = 0; j < imageData.height; j++) {

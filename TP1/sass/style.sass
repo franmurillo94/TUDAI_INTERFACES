@@ -30,33 +30,24 @@ main
         justify-content: space-around
         border: 1px solid black
         padding: 2vh
-        div
-            //border: 1px solid red
+        .paint_item
+            height: 70px
+            width: 70px
+            border-radius: 15px
+            color: grey
             display: flex
-            label
-                //border: solid 2px blue 
-                height: 70px
-                width: 70px
-                border-radius: 15px
-                color: grey
-                display: flex
-                align-items: center
-                justify-content: center
-                box-shadow: 0 0 2px black
-                .fas
-                    font-size: 50px
-                    //border: 1px solid blue
-            input
-                appearance: none
-                -webkit-appearance: none
-                visibility: hidden
-                margin: 0
-            & :checked ~ label
+            align-items: center
+            justify-content: center
+            box-shadow: 0 0 2px black
+            cursor: pointer
+            .fas
+                font-size: 50px
+            &:hover
+                background-color: $secundario
+            &.active-tool
                 background-color: $checked
                 color: white
                 box-shadow: 0 0 4px white
-            & :hover ~ label
-                background-color: $secundario
     .main 
         padding: 40px
         display: flex

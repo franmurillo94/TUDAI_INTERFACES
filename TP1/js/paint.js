@@ -12,6 +12,18 @@ export default class Paint {
     set activeTool(tool) {
         this.tool = tool;
     }
+    
+    set activeColor(color) {
+        this.color = color;
+        this.context.strokeStyle = this.color;
+        return console.log(this.color);
+    }
+    
+    set activeGrosor(grosor) {
+        this.grosor = grosor;
+        this.context.lineWidth = this.grosor;
+        return console.log(this.grosor);
+    }
 
     init(){
         this.canvas.onmousedown = e => this.onMouseDown(e);

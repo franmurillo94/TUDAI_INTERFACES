@@ -17,46 +17,53 @@ document.querySelectorAll("[data-tool]").forEach(
             
             let active_tool = item.getAttribute('data-tool');
             paint.activeTool = active_tool;
-
             switch(active_tool) {
                 case TOOL_PINCEL:
+                }
+            })
+        }
+        );
+        document.querySelectorAll("[data-filter]").forEach(
+            item => {
+                item.addEventListener("click", e => {
+                    //console.log(item.getAttribute("data-tool"));
+                    if (document.querySelector("[data-filter].active-filter") != null) {
+                        document.querySelector("[data-filter].active-filter").classList.toggle("active-filter");   //se saca la clase active-tool a la herramienta activa anterior
+                    }      
+                    item.classList.add("active-filter");                                                       //se le agrega la clase active-tool a la activa actualmente
+                })
             }
-        })
+            );
+            
+           
+    let color = document.getElementById("color").value;
+    let grosor = document.getElementById("grosor").value;
+
+    document.getElementById("color").onchange = () => {
+        color = document.getElementById("color").value;
+        paint.activeColor = color;
     }
-);
-document.querySelectorAll("[data-filter]").forEach(
-    item => {
-        item.addEventListener("click", e => {
-            //console.log(item.getAttribute("data-tool"));
-            if (document.querySelector("[data-filter].active-filter") != null) {
-                document.querySelector("[data-filter].active-filter").classList.toggle("active-filter");   //se saca la clase active-tool a la herramienta activa anterior
-            }      
-            item.classList.add("active-filter");                                                       //se le agrega la clase active-tool a la activa actualmente
-        })
+    document.getElementById("grosor").onchange = () => {
+        grosor = document.getElementById("grosor").value;
+        paint.activeGrosor = grosor;
     }
-);
-
-
-
-
-
-
-
-
-
-
-// muestra y oculta barra de herramientas 'filtros'
-let filter_tools = document.querySelector('.filter-btn').addEventListener('click',function() {
-    document.getElementById('filter-toggle').classList.toggle('active')
-});
-
-// canvas y contexto
-let canvas = document.querySelector('#canvas');
-let ctx = canvas.getContext('2d');
-
-clean_canvas();
-// canvas color blanco
-let btn_clean = document.getElementById('clean-canvas').addEventListener('click', clean_canvas)
+    //console.log(grosor);
+    paint.activeGrosor = grosor;
+    //console.log(paint.activeGrosor);
+    
+    
+    // muestra y oculta barra de herramientas 'filtros'
+    let filter_tools = document.querySelector('.filter-btn').addEventListener('click',function() {
+        document.getElementById('filter-toggle').classList.toggle('active')
+    });
+    
+    // canvas y contexto
+    let canvas = document.querySelector('#canvas');
+    let ctx = canvas.getContext('2d');
+    
+    clean_canvas();
+    // canvas color blanco
+    let btn_clean = document.getElementById('clean-canvas').addEventListener('click', clean_canvas)
 function clean_canvas(){
     canvas.width = 500;
     canvas.height = 300;

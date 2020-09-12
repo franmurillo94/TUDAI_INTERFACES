@@ -1,4 +1,4 @@
-// funcion valores radio button
+/* // funcion valores radio button
 function getRadioValue(name){
     for (var i = 0; i < document.getElementsByName(name).length; i++){
         if (document.getElementsByName(name)[i].checked){
@@ -11,4 +11,11 @@ let paint_tool = getRadioValue('paint-tool');
 
 // canvas color blanco
 ctx.fillStyle = 'rgba(255,255,255,1)';
-ctx.fillRect(0, 0, canvas.width, canvas.height);
+ctx.fillRect(0, 0, canvas.width, canvas.height); */
+
+function defcolor(c){
+    console.log(c);
+}
+function defgrosor(g){
+    console.log(g);
+}

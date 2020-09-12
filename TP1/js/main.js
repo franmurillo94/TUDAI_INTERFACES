@@ -1,4 +1,49 @@
 "use strict"
+import { TOOL_PINCEL, TOOL_GOMA } from "./tools.js";
+import Paint from './paint.js';
+
+let paint = new Paint("canvas");
+paint.activeTool = TOOL_PINCEL;
+paint.init();
+
+document.querySelectorAll("[data-tool]").forEach(
+    item => {
+        item.addEventListener("click", e => {
+            //console.log(item.getAttribute("data-tool"));
+            if (document.querySelector("[data-tool].active-tool") != null) {
+                document.querySelector("[data-tool].active-tool").classList.toggle("active-tool");   //se saca la clase active-tool a la herramienta activa anterior
+            }      
+            item.classList.add("active-tool");   //se le agrega la clase active-tool a la activa actualmente
+            
+            let active_tool = item.getAttribute('data-tool');
+
+            switch(active_tool) {
+                case TOOL_PINCEL:
+                    console.log("hola");
+            }
+        })
+    }
+);
+document.querySelectorAll("[data-filter]").forEach(
+    item => {
+        item.addEventListener("click", e => {
+            //console.log(item.getAttribute("data-tool"));
+            if (document.querySelector("[data-filter].active-filter") != null) {
+                document.querySelector("[data-filter].active-filter").classList.toggle("active-filter");   //se saca la clase active-tool a la herramienta activa anterior
+            }      
+            item.classList.add("active-filter");                                                       //se le agrega la clase active-tool a la activa actualmente
+        })
+    }
+);
+
+
+
+
+
+
+
+
+
 
 // muestra y oculta barra de herramientas 'filtros'
 let filter_tools = document.querySelector('.filter-btn').addEventListener('click',function() {

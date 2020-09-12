@@ -15,6 +15,12 @@
     </header>
     <main>
         <div class="paint_tools">
+            <div class="paint_item" data-tool="pincel">
+                <i class="fas fa-paint-brush"></i>
+            </div>
+            <div class="paint_item" data-tool="goma">
+                <i class="fas fa-eraser"></i>
+            </div>
             <div>
                 <input type="radio" name="paint-tool" value="pincel" id="pincel" />
                 <label for="pincel">
@@ -44,14 +50,14 @@
                 <h3>Filtros</h3>
             </div>
             <div id="filter-toggle" class="filter-toggle active">
-                <div class="filter-button"><button id="negativo">Negativo</button></div>
-                <div class="filter-button"><button id="sepia">Sepia</button></div>
-                <div class="filter-button"><button id="binarizacion">Binarizacion</button></div>
-                <div class="filter-button"><button id="brillo">Brillo</button></div>
-                <div class="filter-button"><button id="blur">Blur</button></div>
-                <div class="filter-button"><button id="saturacion">Saturacion</button></div>
-                <div class="filter-button"><button id="suavizado">Suavizado</button></div>
-                <div class="filter-button"><button id="bordes">Bordes</button></div>
+                <div class="filter-button" data-filter="negativo"><button id="negativo">Negativo</button></div>
+                <div class="filter-button" data-filter="sepia"><button id="sepia">Sepia</button></div>
+                <div class="filter-button" data-filter="binarizacion"><button id="binarizacion">Binarizacion</button></div>
+                <div class="filter-button" data-filter="brillo"><button id="brillo">Brillo</button></div>
+                <div class="filter-button" data-filter="blur"><button id="blur">Blur</button></div>
+                <div class="filter-button" data-filter="saturacion"><button id="saturacion">Saturacion</button></div>
+                <div class="filter-button" data-filter="suavizado"><button id="suavizado">Suavizado</button></div>
+                <div class="filter-button" data-filter="bordes"><button id="bordes">Bordes</button></div>
             </div>
         </div>
     </main>
@@ -71,7 +77,7 @@
         <input type="file" class="file">
     </div>
     <button id="prueba">prueba</button>
-    <script src="js/main.js"></script>
+    <script src="js/main.js" type="module"></script>
 </body>
 
 </html>

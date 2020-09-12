@@ -3,7 +3,7 @@ import { TOOL_PINCEL, TOOL_GOMA } from "./tools.js";
 import Paint from './paint.js';
 
 let paint = new Paint("canvas");
-paint.activeTool = TOOL_PINCEL;
+//paint.activeTool = TOOL_PINCEL;
 paint.init();
 
 document.querySelectorAll("[data-tool]").forEach(
@@ -16,10 +16,10 @@ document.querySelectorAll("[data-tool]").forEach(
             item.classList.add("active-tool");   //se le agrega la clase active-tool a la activa actualmente
             
             let active_tool = item.getAttribute('data-tool');
+            paint.activeTool = active_tool;
 
             switch(active_tool) {
                 case TOOL_PINCEL:
-                    console.log("hola");
             }
         })
     }

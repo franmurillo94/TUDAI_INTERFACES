@@ -29,6 +29,9 @@ export default class Paint {
         if(this.tool == TOOL_PINCEL){
             this.context.moveTo(this.startPos.x,this.startPos.y);
         }
+        else if(this.tool == TOOL_GOMA){
+            this.context.clearRect(this.startPos.x, this.startPos.y,20,20);
+        }
     }
 
     onMouseMove(e){
@@ -40,6 +43,10 @@ export default class Paint {
             case TOOL_PINCEL:
                 this.drawFreeLine();
                 break;
+            case TOOL_GOMA:
+                this.context.clearRect(this.currentPos.x,this.currentPos.y,20,20);
+                break;
+            default:
         }
     }
 

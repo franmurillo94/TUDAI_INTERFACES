@@ -1,9 +1,10 @@
-import Point from './point.js'
+import Punto from './punto.js'
 
-export function getMouseCoordsOnCanvas(e,canvas){
+export function getMouseCoordenadas(e,canvas){
     
     let rect = canvas.getBoundingClientRect();
     let x = e.clientX - rect.left;
     let y = e.clientY - rect.top;
-    return new Point(x,y);
+    return new Punto(x,y);
 }
+

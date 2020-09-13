@@ -1,6 +1,6 @@
-import Point from './point.js';
+
 import { TOOL_PINCEL, TOOL_GOMA } from "./tools.js";
-import { getMouseCoordsOnCanvas } from "./utility.js";
+import { getMouseCoordenadas } from "./utility.js";
 
 export default class Paint {
 
@@ -36,27 +36,28 @@ export default class Paint {
 
         //console.log(e.clientX, e.clientY);
         //console.log(getMouseCoordsOnCanvas(e, this.canvas));
-        this.startPos = getMouseCoordsOnCanvas(e,this.canvas);
+        this.coord_inicio = getMouseCoordenadas(e,this.canvas);
 
         if(this.tool == TOOL_PINCEL){
-            this.context.moveTo(this.startPos.x,this.startPos.y);
+            this.context.beginPath();
+            this.context.moveTo(this.coord_inicio.x,this.coord_inicio.y);
         }
         else if(this.tool == TOOL_GOMA){
-            this.context.clearRect(this.startPos.x, this.startPos.y,20,20);
+            this.context.clearRect(this.coord_inicio.x, this.coord_inicio.y,20,20);
         }
     }
 
     onMouseMove(e){
 
-        this.currentPos = getMouseCoordsOnCanvas(e,this.canvas);
-        console.log(this.currentPos);
+        this.coord_actual = getMouseCoordenadas(e,this.canvas);
+        //console.log(this.currentPos);
 
         switch(this.tool){
             case TOOL_PINCEL:
                 this.drawFreeLine();
                 break;
             case TOOL_GOMA:
-                this.context.clearRect(this.currentPos.x,this.currentPos.y,20,20);
+                this.context.clearRect(this.coord_actual.x,this.coord_actual.y,20,20);
                 break;
             default:
         }
@@ -64,12 +65,15 @@ export default class Paint {
 
     onMouseUp(e){
 
+        if(this.tool == TOOL_PINCEL){
+            this.context.beginPath();
+        }
         this.canvas.onmousemove = null;
         document.onmouseup = null;
     }
 
     drawFreeLine(){
-        this.context.lineTo(this.currentPos.x,this.currentPos.y);
+        this.context.lineTo(this.coord_actual.x,this.coord_actual.y);
         this.context.stroke();
     }
 }

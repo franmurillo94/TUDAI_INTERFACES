@@ -1,4 +1,4 @@
-export default class Point{
+export default class Punto{
 
     constructor(x,y){
         this.x = x;

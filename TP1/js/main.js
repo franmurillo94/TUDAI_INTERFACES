@@ -11,72 +11,72 @@ document.querySelectorAll("[data-tool]").forEach(
         item.addEventListener("click", e => {
             //console.log(item.getAttribute("data-tool"));
             if (document.querySelector("[data-tool].active-tool") != null) {
-                document.querySelector("[data-tool].active-tool").classList.toggle("active-tool");   //se saca la clase active-tool a la herramienta activa anterior
-            }      
-            item.classList.add("active-tool");   //se le agrega la clase active-tool a la activa actualmente
-            
+                document.querySelector("[data-tool].active-tool").classList.toggle("active-tool");
+            }
+            item.classList.add("active-tool");
+
             let active_tool = item.getAttribute('data-tool');
             paint.activeTool = active_tool;
-            switch(active_tool) {
+            switch (active_tool) {
                 case TOOL_PINCEL:
-                }
-            })
-        }
-        );
-        document.querySelectorAll("[data-filter]").forEach(
-            item => {
-                item.addEventListener("click", e => {
-                    //console.log(item.getAttribute("data-tool"));
-                    if (document.querySelector("[data-filter].active-filter") != null) {
-                        document.querySelector("[data-filter].active-filter").classList.toggle("active-filter");   //se saca la clase active-tool a la herramienta activa anterior
-                    }      
-                    item.classList.add("active-filter");                                                       //se le agrega la clase active-tool a la activa actualmente
-                })
             }
-            );
-            
-           
-    let color = document.getElementById("color").value;
-    let grosor = document.getElementById("grosor").value;
+        })
+    }
+);
+document.querySelectorAll("[data-filter]").forEach(
+    item => {
+        item.addEventListener("click", e => {
+            //console.log(item.getAttribute("data-tool"));
+            if (document.querySelector("[data-filter].active-filter") != null) {
+                document.querySelector("[data-filter].active-filter").classList.toggle("active-filter");   //se saca la clase active-tool a la herramienta activa anterior
+            }
+            item.classList.add("active-filter");                                                       //se le agrega la clase active-tool a la activa actualmente
+        })
+    }
+);
 
-    document.getElementById("color").onchange = () => {
-        color = document.getElementById("color").value;
-        paint.activeColor = color;
-    }
-    document.getElementById("grosor").onchange = () => {
-        grosor = document.getElementById("grosor").value;
-        paint.activeGrosor = grosor;
-    }
-    //console.log(grosor);
+
+let color = document.getElementById("color").value;
+let grosor = document.getElementById("grosor").value;
+
+document.getElementById("color").onchange = () => {
+    color = document.getElementById("color").value;
+    paint.activeColor = color;
+}
+document.getElementById("grosor").onchange = () => {
+    grosor = document.getElementById("grosor").value;
     paint.activeGrosor = grosor;
-    //console.log(paint.activeGrosor);
-    
-    
-    // muestra y oculta barra de herramientas 'filtros'
-    let filter_tools = document.querySelector('.filter-btn').addEventListener('click',function() {
-        document.getElementById('filter-toggle').classList.toggle('active')
-    });
-    
-    // canvas y contexto
-    let canvas = document.querySelector('#canvas');
-    let ctx = canvas.getContext('2d');
-    
-    clean_canvas();
-    // canvas color blanco
-    let btn_clean = document.getElementById('clean-canvas').addEventListener('click', clean_canvas)
-function clean_canvas(){
+}
+
+
+// muestra y oculta barra de herramientas 'filtros'
+document.querySelector('.filter-btn').addEventListener('click', function () {
+    document.getElementById('filter-toggle').classList.toggle('active')
+});
+
+// canvas y contexto
+let canvas = document.querySelector('#canvas');
+let ctx = canvas.getContext('2d');
+
+clean_canvas();
+// canvas color blanco
+let btn_clean = document.getElementById('clean-canvas').addEventListener('click', clean_canvas)
+function clean_canvas() {
     canvas.width = 500;
     canvas.height = 300;
-    let imageData = ctx.createImageData(canvas.width,canvas.height);
+    let imageData = ctx.createImageData(canvas.width, canvas.height);
     for (let i = 0; i < imageData.data.length; i += 4) {
-        imageData.data[i + 0] = 255; 
-        imageData.data[i + 1] = 255;    
-        imageData.data[i + 2] = 255;  
+        imageData.data[i + 0] = 255;
+        imageData.data[i + 1] = 255;
+        imageData.data[i + 2] = 255;
         imageData.data[i + 3] = 255;
     }
     ctx.putImageData(imageData, 0, 0);
+    grosor = document.getElementById("grosor").value;
+    paint.activeGrosor = grosor;
+    color = document.getElementById("color").value;
+    paint.activeColor = color;
 }
-
 
 let input = document.querySelector('.file');
 
@@ -99,19 +99,19 @@ input.onchange = e => {
         image.src = content;
 
         image.onload = function () {
-          /*   let imageAspectRatio = (1.0 * this.height) / this.width;
-            let imageScaledWidth = canvas.width;
-            let imageScaledHeight = canvas.width * imageAspectRatio; */
+            /*   let imageAspectRatio = (1.0 * this.height) / this.width;
+              let imageScaledWidth = canvas.width;
+              let imageScaledHeight = canvas.width * imageAspectRatio; */
             console.log(this.height);
             console.log(this.width);
             canvas.width = this.width;
             canvas.height = this.height;
             // draw image on canvas
             ctx.drawImage(this, 0, 0, this.width, this.height);
-            
+
             // get imageData from content of canvas
             let imageData = ctx.getImageData(0, 0, this.width, this.height);
-            
+
             // modify imageData
             /*          for (let j = 0; j < imageData.height; j++) {
                 for (let i = 0; i < imageData.width; i++) {
@@ -123,21 +123,16 @@ input.onchange = e => {
                     }
                 }
             } */
-            
+
             // draw the modified image
             ctx.putImageData(imageData, 0, 0);
         }
     }
 }
-let btn_download = document.getElementById('download_btn').addEventListener('click',download);
+let btn_download = document.getElementById('download_btn').addEventListener('click', download);
 
-function download(){
+function download() {
     let download = document.getElementById("download");
     let image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
     download.setAttribute("href", image);
-    
 }
-        let prueba = document.getElementById('prueba').addEventListener('click',function(){
-            canvas_blanco();
-            console.log("hola");
-        });

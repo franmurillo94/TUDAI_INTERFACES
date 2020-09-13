@@ -3,13 +3,11 @@ import { TOOL_PINCEL, TOOL_GOMA } from "./tools.js";
 import Paint from './paint.js';
 
 let paint = new Paint("canvas");
-//paint.activeTool = TOOL_PINCEL;
 paint.init();
 
 document.querySelectorAll("[data-tool]").forEach(
     item => {
         item.addEventListener("click", e => {
-            //console.log(item.getAttribute("data-tool"));
             if (document.querySelector("[data-tool].active-tool") != null) {
                 document.querySelector("[data-tool].active-tool").classList.toggle("active-tool");
             }
@@ -35,18 +33,8 @@ document.querySelectorAll("[data-filter]").forEach(
     }
 );
 
-
-let color = document.getElementById("color").value;
-let grosor = document.getElementById("grosor").value;
-
-document.getElementById("color").onchange = () => {
-    color = document.getElementById("color").value;
-    paint.activeColor = color;
-}
-document.getElementById("grosor").onchange = () => {
-    grosor = document.getElementById("grosor").value;
-    paint.activeGrosor = grosor;
-}
+document.getElementById("color").onchange = () => set_color();
+document.getElementById("grosor").onchange = () => set_grosor();
 
 
 // muestra y oculta barra de herramientas 'filtros'
@@ -59,8 +47,8 @@ let canvas = document.querySelector('#canvas');
 let ctx = canvas.getContext('2d');
 
 clean_canvas();
-// canvas color blanco
-let btn_clean = document.getElementById('clean-canvas').addEventListener('click', clean_canvas)
+
+document.getElementById('clean-canvas').addEventListener('click', clean_canvas);
 function clean_canvas() {
     canvas.width = 500;
     canvas.height = 300;
@@ -72,10 +60,7 @@ function clean_canvas() {
         imageData.data[i + 3] = 255;
     }
     ctx.putImageData(imageData, 0, 0);
-    grosor = document.getElementById("grosor").value;
-    paint.activeGrosor = grosor;
-    color = document.getElementById("color").value;
-    paint.activeColor = color;
+    set_grosor(); set_color();
 }
 
 let input = document.querySelector('.file');
@@ -126,13 +111,23 @@ input.onchange = e => {
 
             // draw the modified image
             ctx.putImageData(imageData, 0, 0);
+           set_grosor(); set_color();
         }
     }
 }
-let btn_download = document.getElementById('download_btn').addEventListener('click', download);
+document.getElementById('download_btn').addEventListener('click', download);
 
 function download() {
     let download = document.getElementById("download");
     let image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
     download.setAttribute("href", image);
+}
+
+function set_grosor(){
+    let grosor = document.getElementById("grosor").value;
+    paint.activeGrosor = grosor;
+}
+function set_color(){
+    let color = document.getElementById("color").value;
+    paint.activeColor = color;
 }

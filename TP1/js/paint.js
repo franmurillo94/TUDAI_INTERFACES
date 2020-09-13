@@ -54,7 +54,7 @@ export default class Paint {
 
         switch(this.tool){
             case TOOL_PINCEL:
-                this.drawFreeLine();
+                this.dibujar();
                 break;
             case TOOL_GOMA:
                 this.context.clearRect(this.coord_actual.x,this.coord_actual.y,20,20);
@@ -72,7 +72,7 @@ export default class Paint {
         document.onmouseup = null;
     }
 
-    drawFreeLine(){
+    dibujar(){
         this.context.lineTo(this.coord_actual.x,this.coord_actual.y);
         this.context.stroke();
     }

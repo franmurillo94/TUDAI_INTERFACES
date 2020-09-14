@@ -143,11 +143,13 @@ document.getElementById("sepia").addEventListener('click', function () {
     aSepia(canvas,ctx)});
 document.getElementById("negativo").addEventListener('click', function () {
     aNegativo(canvas,ctx)});
+document.getElementById("binarizacion").addEventListener('click', function () {
+    aBinarizacion(canvas,ctx)});
 //document.getElementById("negativo").addEventListener('click', aInvertir(canvas,ctx));
 
 function aSepia(canvas, ctx) {
 
-    console.log("hola");
+    console.log("sepia");
     let restauracion = ctx.putImageData(data_copia,0,0);
     let data_img = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let data = data_img.data;
@@ -162,7 +164,7 @@ function aSepia(canvas, ctx) {
 
 function aNegativo(canvas, ctx) {
 
-    console.log("hola");
+    console.log("negativo");
     let restauracion = ctx.putImageData(data_copia,0,0);
     let data_img = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let data = data_img.data;
@@ -171,6 +173,29 @@ function aNegativo(canvas, ctx) {
         data[x] = 255 - data[x];
         data[x + 1] = 255 - data[x+1];
         data[x + 2] = 255 - data[x+2];
+    }
+    ctx.putImageData(data_img, 0, 0);
+}
+
+function aBinarizacion(canvas, ctx) {
+
+    console.log("binarizacion");
+    let restauracion = ctx.putImageData(data_copia,0,0);
+    let data_img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let data = data_img.data;
+
+    for (let x = 0; x < data.length; x += 4) {
+        let aux;
+        let gris = (data[x] + data[x+1] + data[x+2])/3;
+        if(127.5<=gris){
+            aux = 255;
+        }
+        else{
+            aux = 0;
+        }
+        data[x] = aux;
+        data[x + 1] = aux;
+        data[x + 2] = aux;
     }
     ctx.putImageData(data_img, 0, 0);
 }

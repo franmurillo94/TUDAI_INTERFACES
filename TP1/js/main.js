@@ -21,7 +21,7 @@ document.querySelectorAll("[data-tool]").forEach(
         })
     }
 );
-document.querySelectorAll("[data-filter]").forEach(
+/* document.querySelectorAll("[data-filter]").forEach(
     item => {
         item.addEventListener("click", e => {
             //console.log(item.getAttribute("data-tool"));
@@ -31,7 +31,7 @@ document.querySelectorAll("[data-filter]").forEach(
             item.classList.add("active-filter");                                                       //se le agrega la clase active-tool a la activa actualmente
         })
     }
-);
+); */
 
 document.getElementById("color").onchange = () => set_color();
 document.getElementById("grosor").onchange = () => set_grosor();
@@ -46,6 +46,7 @@ document.querySelector('.filter-btn').addEventListener('click', function () {
 let canvas = document.querySelector('#canvas');
 let ctx = canvas.getContext('2d');
 
+let data_copia;
 clean_canvas();
 
 document.getElementById('clean-canvas').addEventListener('click', clean_canvas);
@@ -59,9 +60,11 @@ function clean_canvas() {
         imageData.data[i + 2] = 255;
         imageData.data[i + 3] = 255;
     }
+    data_copia = imageData;
     ctx.putImageData(imageData, 0, 0);
     set_grosor(); set_color();
 }
+
 
 let input = document.querySelector('.file');
 
@@ -82,7 +85,6 @@ input.onchange = e => {
         //image.crossOrigin = 'Anonymous';
 
         image.src = content;
-
         image.onload = function () {
             /*   let imageAspectRatio = (1.0 * this.height) / this.width;
               let imageScaledWidth = canvas.width;
@@ -108,8 +110,13 @@ input.onchange = e => {
                     }
                 }
             } */
-
             // draw the modified image
+            let imageDataCopy = new ImageData(
+                new Uint8ClampedArray(imageData.data),
+                imageData.width,
+                imageData.height
+           )
+            data_copia = imageDataCopy;
             ctx.putImageData(imageData, 0, 0);
            set_grosor(); set_color();
         }
@@ -130,4 +137,40 @@ function set_grosor(){
 function set_color(){
     let color = document.getElementById("color").value;
     paint.activeColor = color;
+}
+
+document.getElementById("sepia").addEventListener('click', function () {
+    aSepia(canvas,ctx)});
+document.getElementById("negativo").addEventListener('click', function () {
+    aNegativo(canvas,ctx)});
+//document.getElementById("negativo").addEventListener('click', aInvertir(canvas,ctx));
+
+function aSepia(canvas, ctx) {
+
+    console.log("hola");
+    let restauracion = ctx.putImageData(data_copia,0,0);
+    let data_img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let data = data_img.data;
+
+    for (let x = 0; x < data.length; x += 4) {
+        data[x] = data[x] *0.393 + data[x+1] *0.769 + data[x+2] *0.189;
+        data[x + 1] = data[x] *0.393 + data[x+1] *0.686 + data[x+2] *0.168;
+        data[x + 2] = data[x] *0.272 + data[x+1] *0.534 + data[x+2] *0.131;
+    }
+    ctx.putImageData(data_img, 0, 0);
+}
+
+function aNegativo(canvas, ctx) {
+
+    console.log("hola");
+    let restauracion = ctx.putImageData(data_copia,0,0);
+    let data_img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let data = data_img.data;
+
+    for (let x = 0; x < data.length; x += 4) {
+        data[x] = 255 - data[x];
+        data[x + 1] = 255 - data[x+1];
+        data[x + 2] = 255 - data[x+2];
+    }
+    ctx.putImageData(data_img, 0, 0);
 }

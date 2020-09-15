@@ -42,7 +42,7 @@ export default class Paint {
             this.context.moveTo(this.coord_inicio.x,this.coord_inicio.y);
         }
         else if(this.tool == TOOL_GOMA){
-            this.context.clearRect(this.coord_inicio.x, this.coord_inicio.y,20,20);
+            this.context.clearRect(this.coord_inicio.x, this.coord_inicio.y,this.grosor*3,this.grosor*3);
         }
     }
 
@@ -56,7 +56,7 @@ export default class Paint {
                 this.dibujar();
                 break;
             case TOOL_GOMA:
-                this.context.clearRect(this.coord_actual.x,this.coord_actual.y,20,20);
+                this.context.clearRect(this.coord_actual.x,this.coord_actual.y,this.grosor*3,this.grosor*3);
                 break;
             default:
         }

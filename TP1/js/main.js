@@ -39,24 +39,24 @@ clean_canvas();
 // cargar imagen de disco
 let input = document.querySelector('.file');
 input.onchange = e => {
-    
+
     let file = e.target.files[0];
     let reader = new FileReader();
     reader.readAsDataURL(file);
-    
+
     reader.onload = readerEvent => {
         let content = readerEvent.target.result;
         let image = new Image();
-        
+
         image.src = content;
         image.onload = function () {
             //console.log(this.height);
             //console.log(this.width);
             canvas.width = this.width;
             canvas.height = this.height;
-            
+
             ctx.drawImage(this, 0, 0, this.width, this.height);
-            
+
             let imageData = ctx.getImageData(0, 0, this.width, this.height);
             // se hace copia de la imageData de la imagen
             let imageDataCopy = new ImageData(new Uint8ClampedArray(imageData.data), imageData.width, imageData.height);
@@ -161,14 +161,55 @@ function aBinarizacion(canvas, ctx) {
     ctx.putImageData(data_img, 0, 0);
 }
 
+let contraste = document.getElementById("contraste");
+let brillo = document.getElementById("brillo");
+
+//contraste.onchange = () => { aContraste(); }
+brillo.onchange = () => { aBrillo(); }
+
+function aBrillo() {
+    let restauracion = ctx.putImageData(data_copia, 0, 0);
+    let value = brillo.value * 0.7;
+    let data_img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let data = data_img.data;
+
+    console.log(value);
+    for (let x = 0; x < data.length; x+=4) { {
+            data[x] = Math.trunc(value + data[x]);
+            data[x + 1] = Math.trunc(value + data[x + 1]);
+            data[x + 2] =  Math.trunc(value + data[x + 2]) ;
+        }
+    }
+    ctx.putImageData(data_img, 0, 0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* document.querySelectorAll("[data-filter]").forEach(
     item => {
         item.addEventListener("click", e => {
             //console.log(item.getAttribute("data-tool"));
             if (document.querySelector("[data-filter].active-filter") != null) {
-                document.querySelector("[data-filter].active-filter").classList.toggle("active-filter");  
+                document.querySelector("[data-filter].active-filter").classList.toggle("active-filter");
             }
-            item.classList.add("active-filter");                                                     
+            item.classList.add("active-filter");
         })
     }
 ); */

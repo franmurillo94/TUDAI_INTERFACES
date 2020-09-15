@@ -161,7 +161,7 @@ function aBinarizacion(canvas, ctx) {
     ctx.putImageData(data_img, 0, 0);
 }
 
-let contraste = document.getElementById("contraste");
+//let contraste = document.getElementById("contraste");
 let brillo = document.getElementById("brillo");
 
 //contraste.onchange = () => { aContraste(); }
@@ -174,15 +174,64 @@ function aBrillo() {
     let data = data_img.data;
 
     console.log(value);
-    for (let x = 0; x < data.length; x+=4) { {
+    for (let x = 0; x < data.length; x += 4) {
+        {
             data[x] = Math.trunc(value + data[x]);
             data[x + 1] = Math.trunc(value + data[x + 1]);
-            data[x + 2] =  Math.trunc(value + data[x + 2]) ;
+            data[x + 2] = Math.trunc(value + data[x + 2]);
         }
     }
     ctx.putImageData(data_img, 0, 0);
 }
 
+let saturacion = document.getElementById("saturacion");
+
+saturacion.onchange = () => { aSaturacion(); }
+
+function aSaturacion() {
+    let restauracion = ctx.putImageData(data_copia, 0, 0);
+    let value = saturacion.value*0.5;
+    let data_img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let data = data_img.data;
+    let color;
+
+    console.log(value);
+    for (let x = 0; x < data.length; x += 4) {
+        color = color_principal(data[x], data[x + 1], data[x + 2]);
+        switch(color) {
+            case 0:
+                data[x] =  Math.trunc(data[x]+value);
+                data[x + 1] = Math.trunc(data[x + 1]-value);
+                data[x + 2] = Math.trunc(data[x + 2]-value);
+                break;
+            case 1:
+                data[x] = Math.trunc(data[x]-value);
+                data[x + 1] = Math.trunc(data[x + 1]+value);
+                data[x + 2] = Math.trunc(data[x + 2]-value);
+                break;
+            case 2:
+                data[x] = Math.trunc(data[x]-value);
+                data[x + 1] = Math.trunc(data[x + 1]-value);
+                data[x + 2] = Math.trunc(data[x + 2]+value);
+                break;
+            default:
+        }
+    }
+    ctx.putImageData(data_img, 0, 0);
+}
+
+function color_principal(r, g, b) {
+    if (r > b && r > g) {
+        return 0;
+    }
+    else if (g > r && g > b) {
+        return 1;
+    }
+    else if (b > r && b > g) {
+        return 2;
+    }
+    else return -1;
+}
 
 
 

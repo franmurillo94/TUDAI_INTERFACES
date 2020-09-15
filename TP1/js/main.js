@@ -110,6 +110,9 @@ document.getElementById("negativo").addEventListener('click', function () {
 document.getElementById("binarizacion").addEventListener('click', function () {
     aBinarizacion(canvas, ctx)
 });
+document.getElementById("gris").addEventListener('click', function () {
+    aGris(canvas, ctx)
+});
 //document.getElementById("negativo").addEventListener('click', aInvertir(canvas,ctx));
 
 // filtros
@@ -123,6 +126,21 @@ function aSepia(canvas, ctx) {
         data[x] = data[x] * 0.393 + data[x + 1] * 0.769 + data[x + 2] * 0.189;
         data[x + 1] = data[x] * 0.393 + data[x + 1] * 0.686 + data[x + 2] * 0.168;
         data[x + 2] = data[x] * 0.272 + data[x + 1] * 0.534 + data[x + 2] * 0.131;
+    }
+    ctx.putImageData(data_img, 0, 0);
+}
+function aGris(canvas, ctx) {
+    //console.log("sepia");
+    let restauracion = ctx.putImageData(data_copia, 0, 0);
+    let data_img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let data = data_img.data;
+    let aux;
+
+    for (let x = 0; x < data.length; x += 4) {
+        aux = (data[x]+data[x+1]+data[x+2])/3;
+        data[x] = aux;
+        data[x + 1] = aux;
+        data[x + 2] = aux;
     }
     ctx.putImageData(data_img, 0, 0);
 }
@@ -173,7 +191,7 @@ function aBrillo() {
     let data_img = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let data = data_img.data;
 
-    console.log(value);
+    //console.log(value);
     for (let x = 0; x < data.length; x += 4) {
         {
             data[x] = Math.trunc(value + data[x]);
@@ -195,7 +213,7 @@ function aSaturacion() {
     let data = data_img.data;
     let color;
 
-    console.log(value);
+    //console.log(value);
     for (let x = 0; x < data.length; x += 4) {
         color = color_principal(data[x], data[x + 1], data[x + 2]);
         switch(color) {
@@ -232,33 +250,3 @@ function color_principal(r, g, b) {
     }
     else return -1;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* document.querySelectorAll("[data-filter]").forEach(
-    item => {
-        item.addEventListener("click", e => {
-            //console.log(item.getAttribute("data-tool"));
-            if (document.querySelector("[data-filter].active-filter") != null) {
-                document.querySelector("[data-filter].active-filter").classList.toggle("active-filter");
-            }
-            item.classList.add("active-filter");
-        })
-    }
-); */

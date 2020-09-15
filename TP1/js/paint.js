@@ -1,6 +1,5 @@
 
 import { TOOL_PINCEL, TOOL_GOMA } from "./tools.js";
-import { getMouseCoordenadas } from "./utility.js";
 
 export default class Paint {
 
@@ -16,13 +15,13 @@ export default class Paint {
     set activeColor(color) {
         this.color = color;
         this.context.strokeStyle = this.color;
-        return console.log(this.color);
+        //return console.log(this.color);
     }
     
     set activeGrosor(grosor) {
         this.grosor = grosor;
         this.context.lineWidth = this.grosor;
-        return console.log(this.grosor);
+        //return console.log(this.grosor);
     }
 
     init(){
@@ -32,10 +31,10 @@ export default class Paint {
     onMouseDown(e){
 
         this.canvas.onmousemove = e => this.onMouseMove(e);
-        document.onmouseup = e => this.onMouseUp(e);
+        document.onmouseup = e => this.onMouseUp();
 
         //console.log(e.clientX, e.clientY);
-        //console.log(getMouseCoordsOnCanvas(e, this.canvas));
+        //console.log(getMouseCoordenadas(e, this.canvas));
         this.coord_inicio = getMouseCoordenadas(e,this.canvas);
 
         if(this.tool == TOOL_PINCEL){
@@ -50,7 +49,7 @@ export default class Paint {
     onMouseMove(e){
 
         this.coord_actual = getMouseCoordenadas(e,this.canvas);
-        //console.log(this.currentPos);
+        //console.log(this.coord_actual);
 
         switch(this.tool){
             case TOOL_PINCEL:
@@ -63,10 +62,10 @@ export default class Paint {
         }
     }
 
-    onMouseUp(e){
+    onMouseUp(){
 
         if(this.tool == TOOL_PINCEL){
-            this.context.beginPath();
+            this.context.closePath();
         }
         this.canvas.onmousemove = null;
         document.onmouseup = null;
@@ -75,5 +74,22 @@ export default class Paint {
     dibujar(){
         this.context.lineTo(this.coord_actual.x,this.coord_actual.y);
         this.context.stroke();
+    }
+}
+
+// devuelve coordenadas actual (x, y)
+function getMouseCoordenadas(e,canvas){
+    
+    let rect = canvas.getBoundingClientRect();
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+    return new Punto(x,y);
+}
+
+class Punto{
+
+    constructor(x,y){
+        this.x = x;
+        this.y = y;
     }
 }

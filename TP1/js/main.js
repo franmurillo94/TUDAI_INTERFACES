@@ -1,10 +1,11 @@
 "use strict"
-import { TOOL_PINCEL, TOOL_GOMA } from "./tools.js";
+
 import Paint from './paint.js';
 
 let paint = new Paint("canvas");
 paint.init();
 
+// se agrega funcionalidad a las paint-tools
 document.querySelectorAll("[data-tool]").forEach(
     item => {
         item.addEventListener("click", e => {
@@ -15,27 +16,12 @@ document.querySelectorAll("[data-tool]").forEach(
 
             let active_tool = item.getAttribute('data-tool');
             paint.activeTool = active_tool;
-            switch (active_tool) {
-                case TOOL_PINCEL:
-            }
         })
     }
 );
-/* document.querySelectorAll("[data-filter]").forEach(
-    item => {
-        item.addEventListener("click", e => {
-            //console.log(item.getAttribute("data-tool"));
-            if (document.querySelector("[data-filter].active-filter") != null) {
-                document.querySelector("[data-filter].active-filter").classList.toggle("active-filter");   //se saca la clase active-tool a la herramienta activa anterior
-            }
-            item.classList.add("active-filter");                                                       //se le agrega la clase active-tool a la activa actualmente
-        })
-    }
-); */
-
+// onchange a los input para setear color y grosor
 document.getElementById("color").onchange = () => set_color();
 document.getElementById("grosor").onchange = () => set_grosor();
-
 
 // muestra y oculta barra de herramientas 'filtros'
 document.querySelector('.filter-btn').addEventListener('click', function () {
@@ -49,6 +35,39 @@ let ctx = canvas.getContext('2d');
 let data_copia;
 clean_canvas();
 
+
+// cargar imagen de disco
+let input = document.querySelector('.file');
+input.onchange = e => {
+    
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    
+    reader.onload = readerEvent => {
+        let content = readerEvent.target.result;
+        let image = new Image();
+        
+        image.src = content;
+        image.onload = function () {
+            //console.log(this.height);
+            //console.log(this.width);
+            canvas.width = this.width;
+            canvas.height = this.height;
+            
+            ctx.drawImage(this, 0, 0, this.width, this.height);
+            
+            let imageData = ctx.getImageData(0, 0, this.width, this.height);
+            // se hace copia de la imageData de la imagen
+            let imageDataCopy = new ImageData(new Uint8ClampedArray(imageData.data), imageData.width, imageData.height);
+            data_copia = imageDataCopy;
+            ctx.putImageData(imageData, 0, 0);
+            // se setea grosor y color
+            set_grosor(); set_color();
+        }
+    }
+}
+// limpiar canvas
 document.getElementById('clean-canvas').addEventListener('click', clean_canvas);
 function clean_canvas() {
     canvas.width = 500;
@@ -65,132 +84,74 @@ function clean_canvas() {
     set_grosor(); set_color();
 }
 
-
-let input = document.querySelector('.file');
-
-input.onchange = e => {
-
-    // getting a hold of the file reference
-    let file = e.target.files[0];
-
-    // setting up the reader
-    let reader = new FileReader();
-    reader.readAsDataURL(file); // this is reading as data url
-
-    // here we tell the reader what to do when it's done reading...
-    reader.onload = readerEvent => {
-        let content = readerEvent.target.result; // this is the content!
-
-        let image = new Image();
-        //image.crossOrigin = 'Anonymous';
-
-        image.src = content;
-        image.onload = function () {
-            /*   let imageAspectRatio = (1.0 * this.height) / this.width;
-              let imageScaledWidth = canvas.width;
-              let imageScaledHeight = canvas.width * imageAspectRatio; */
-            console.log(this.height);
-            console.log(this.width);
-            canvas.width = this.width;
-            canvas.height = this.height;
-            // draw image on canvas
-            ctx.drawImage(this, 0, 0, this.width, this.height);
-
-            // get imageData from content of canvas
-            let imageData = ctx.getImageData(0, 0, this.width, this.height);
-
-            // modify imageData
-            /*          for (let j = 0; j < imageData.height; j++) {
-                for (let i = 0; i < imageData.width; i++) {
-                    if (i % 2 == 0) {
-                        let index = (i + imageData.width * j) * 4;
-                        imageData.data[index + 0] = 0;
-                        imageData.data[index + 1] = 0;
-                        imageData.data[index + 2] = 0;
-                    }
-                }
-            } */
-            // draw the modified image
-            let imageDataCopy = new ImageData(
-                new Uint8ClampedArray(imageData.data),
-                imageData.width,
-                imageData.height
-           )
-            data_copia = imageDataCopy;
-            ctx.putImageData(imageData, 0, 0);
-           set_grosor(); set_color();
-        }
-    }
-}
+// descargar
 document.getElementById('download_btn').addEventListener('click', download);
-
 function download() {
     let download = document.getElementById("download");
     let image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
     download.setAttribute("href", image);
 }
-
-function set_grosor(){
+// set grosor y set color del objeto paint
+function set_grosor() {
     let grosor = document.getElementById("grosor").value;
     paint.activeGrosor = grosor;
 }
-function set_color(){
+function set_color() {
     let color = document.getElementById("color").value;
     paint.activeColor = color;
 }
-
+// filtros
 document.getElementById("sepia").addEventListener('click', function () {
-    aSepia(canvas,ctx)});
+    aSepia(canvas, ctx)
+});
 document.getElementById("negativo").addEventListener('click', function () {
-    aNegativo(canvas,ctx)});
+    aNegativo(canvas, ctx)
+});
 document.getElementById("binarizacion").addEventListener('click', function () {
-    aBinarizacion(canvas,ctx)});
+    aBinarizacion(canvas, ctx)
+});
 //document.getElementById("negativo").addEventListener('click', aInvertir(canvas,ctx));
 
+// filtros
 function aSepia(canvas, ctx) {
-
-    console.log("sepia");
-    let restauracion = ctx.putImageData(data_copia,0,0);
+    //console.log("sepia");
+    let restauracion = ctx.putImageData(data_copia, 0, 0);
     let data_img = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let data = data_img.data;
 
     for (let x = 0; x < data.length; x += 4) {
-        data[x] = data[x] *0.393 + data[x+1] *0.769 + data[x+2] *0.189;
-        data[x + 1] = data[x] *0.393 + data[x+1] *0.686 + data[x+2] *0.168;
-        data[x + 2] = data[x] *0.272 + data[x+1] *0.534 + data[x+2] *0.131;
+        data[x] = data[x] * 0.393 + data[x + 1] * 0.769 + data[x + 2] * 0.189;
+        data[x + 1] = data[x] * 0.393 + data[x + 1] * 0.686 + data[x + 2] * 0.168;
+        data[x + 2] = data[x] * 0.272 + data[x + 1] * 0.534 + data[x + 2] * 0.131;
     }
     ctx.putImageData(data_img, 0, 0);
 }
-
 function aNegativo(canvas, ctx) {
-
-    console.log("negativo");
-    let restauracion = ctx.putImageData(data_copia,0,0);
+    //console.log("negativo");
+    let restauracion = ctx.putImageData(data_copia, 0, 0);
     let data_img = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let data = data_img.data;
 
     for (let x = 0; x < data.length; x += 4) {
         data[x] = 255 - data[x];
-        data[x + 1] = 255 - data[x+1];
-        data[x + 2] = 255 - data[x+2];
+        data[x + 1] = 255 - data[x + 1];
+        data[x + 2] = 255 - data[x + 2];
     }
     ctx.putImageData(data_img, 0, 0);
 }
-
 function aBinarizacion(canvas, ctx) {
-
-    console.log("binarizacion");
-    let restauracion = ctx.putImageData(data_copia,0,0);
+    //console.log("binarizacion");
+    let restauracion = ctx.putImageData(data_copia, 0, 0);
     let data_img = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let data = data_img.data;
 
     for (let x = 0; x < data.length; x += 4) {
         let aux;
-        let gris = (data[x] + data[x+1] + data[x+2])/3;
-        if(127.5<=gris){
+        let gris = (data[x] + data[x + 1] + data[x + 2]) / 3;
+        if (127.5 <= gris) {
             aux = 255;
         }
-        else{
+        else {
             aux = 0;
         }
         data[x] = aux;
@@ -199,3 +160,15 @@ function aBinarizacion(canvas, ctx) {
     }
     ctx.putImageData(data_img, 0, 0);
 }
+
+/* document.querySelectorAll("[data-filter]").forEach(
+    item => {
+        item.addEventListener("click", e => {
+            //console.log(item.getAttribute("data-tool"));
+            if (document.querySelector("[data-filter].active-filter") != null) {
+                document.querySelector("[data-filter].active-filter").classList.toggle("active-filter");  
+            }
+            item.classList.add("active-filter");                                                     
+        })
+    }
+); */

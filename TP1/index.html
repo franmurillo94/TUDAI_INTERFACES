@@ -28,6 +28,9 @@
                     <input type="color" id="color">
                 </div>
                 <div>
+                    <label for="grosor">Size:</label>
+                </div>
+                <div>
                     <input type="range" id="grosor" min="1" max="15" value="5">
                 </div>
             </div>
@@ -61,7 +64,7 @@
         <button onclick="document.querySelector('.file').click();" data-title="Cargar Imagen">
             <i class="fas fa-images"></i>
         </button>
-        <input type="file" class="file">
+        <input type="file" class="file" accept="image/*">
         <button id="clean-canvas" data-title="Restaurar Canvas">
             <i class="fas fa-undo"></i>
         </button>
